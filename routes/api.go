@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"net/http"
 	"os"
 	"r101/controllers"
 
@@ -13,7 +14,12 @@ import (
 func InitRoute(e *echo.Echo) {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
+	e.Use(middleware.RemoveTrailingSlash())
 
+	e.GET("/", func(e echo.Context) error {
+		return e.Redirect(http.StatusMovedPermanently, "/api-docs/index.html")
+	})
+	
 	e.POST("/register", controllers.Register)
 	e.POST("/login", controllers.Login)
 

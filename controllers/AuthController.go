@@ -48,7 +48,7 @@ func Register(c echo.Context) error {
 		})
 	}
 
-	return c.JSON(http.StatusOK, dto.BaseResponse {
+	return c.JSON(http.StatusCreated, dto.BaseResponse {
 		Status: true,
 		Message: "Successfully register.",
 		Data: echo.Map{
