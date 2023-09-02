@@ -2,6 +2,8 @@ package config
 
 import (
 	"os"
+
+	"github.com/joho/godotenv"
 )
 
 func GetPort() string {
@@ -11,3 +13,9 @@ func GetPort() string {
 	return ":8000"
 }
 
+func LoadEnv() {
+	err := godotenv.Load()
+	if err != nil {
+		panic("Error loading .env file")
+	}
+}
