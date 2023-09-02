@@ -3,8 +3,8 @@ package utils
 import (
 	"errors"
 	"os"
-	"prakerja9/models"
-	"prakerja9/models/dto"
+	"r101/models"
+	"r101/models/dto"
 	"time"
 
 	"github.com/golang-jwt/jwt/v4"

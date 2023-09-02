@@ -1,4 +1,4 @@
-module prakerja9
+module r101
 
 go 1.20
 

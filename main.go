@@ -1,9 +1,9 @@
 package main
 
 import (
-	config "prakerja9/configs"
-	"prakerja9/routes"
-	"prakerja9/utils"
+	config "r101/configs"
+	"r101/routes"
+	"r101/utils"
 
 	"github.com/labstack/echo/v4"
 )

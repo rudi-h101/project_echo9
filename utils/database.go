@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"prakerja9/models"
+	"r101/models"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"

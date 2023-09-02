@@ -2,7 +2,7 @@ package routes
 
 import (
 	"os"
-	"prakerja9/controllers"
+	"r101/controllers"
 
 	echojwt "github.com/labstack/echo-jwt/v4"
 	"github.com/labstack/echo/v4"

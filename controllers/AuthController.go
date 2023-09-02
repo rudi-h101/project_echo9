@@ -3,9 +3,9 @@ package controllers
 import (
 	"net/http"
 
-	"prakerja9/models"
-	"prakerja9/models/dto"
-	"prakerja9/utils"
+	"r101/models"
+	"r101/models/dto"
+	"r101/utils"
 
 	"github.com/labstack/echo/v4"
 	"golang.org/x/crypto/bcrypt"
