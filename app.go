@@ -17,7 +17,7 @@ func main() {
 	
 	routes.InitRoute(e)
 
-	e.Logger.Fatal(e.Start(config.GetPort()))
+	e.Start(config.GetPort())
 
 }
 
