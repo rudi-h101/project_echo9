@@ -8,6 +8,8 @@ import (
 	echojwt "github.com/labstack/echo-jwt/v4"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+
+	echoSwagger "github.com/swaggo/echo-swagger"
 )
 
 
@@ -19,6 +21,8 @@ func InitRoute(e *echo.Echo) {
 	e.GET("/", func(e echo.Context) error {
 		return e.Redirect(http.StatusMovedPermanently, "/api-docs/index.html")
 	})
+	
+	e.GET("/api-docs/*", echoSwagger.WrapHandler)
 	
 	e.POST("/register", controllers.Register)
 	e.POST("/login", controllers.Login)
