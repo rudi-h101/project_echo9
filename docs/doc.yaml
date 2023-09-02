@@ -1,0 +1,232 @@
+basePath: /
+definitions:
+  model.ResponseOK:
+    properties:
+      data: {}
+      message:
+        type: string
+      status:
+        type: boolean
+    type: object
+  model.User WishRequest:
+    properties:
+      location:
+        type: string
+      name:
+        type: string
+      price:
+        type: integer
+    required:
+      - name
+      - price
+      - location
+    type: object
+host: localhost:8010
+info:
+  contact: {}
+  description: CRUD untuk menyimpan data barang yang ingin dimiliki.
+  title: API Daftar Keinginan Barang
+  version: Development 1.0
+paths:
+  /login:
+    post:
+      consumes:
+        - application/json
+      operationId: login
+      parameters:
+        - description: Request Body
+          in: body
+          name: Input
+          required: true
+          schema:
+            properties:
+              email:
+                type: string
+              password:
+                type: string
+            required:
+              - email
+              - password
+            type: object
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/model.ResponseOK"
+      security: []
+      summary: Login
+      tags:
+        - Auth
+  /register:
+    post:
+      consumes:
+        - application/json
+      operationId: register
+      parameters:
+        - description: Request Body
+          in: body
+          name: Input
+          required: true
+          schema:
+            properties:
+              email:
+                type: string
+              name:
+                type: string
+              password:
+                type: string
+            required:
+              - name
+              - email
+              - password
+            type: object
+      produces:
+        - application/json
+      responses:
+        "201":
+          description: CREATED
+          schema:
+            $ref: "#/definitions/model.ResponseOK"
+      security: []
+      summary: Register
+      tags:
+        - Auth
+  /user-wishes:
+    get:
+      operationId: get-user-wishes-all
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/model.ResponseOK"
+      summary: Get Data User Wish All
+      tags:
+        - User Wish
+    post:
+      consumes:
+        - application/json
+      operationId: create-user-wishes
+      parameters:
+        - description: Request Body
+          in: body
+          name: Input
+          required: true
+          schema:
+            $ref: "#/definitions/model.User WishRequest"
+      produces:
+        - application/json
+      responses:
+        "201":
+          description: CREATED
+          schema:
+            $ref: "#/definitions/model.ResponseOK"
+      summary: Create Data User Wish
+      tags:
+        - User Wish
+  /user-wishes/{id}:
+    delete:
+      operationId: delete-user-wishes
+      parameters:
+        - description: id wish
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "204":
+          description: NO CONTENT
+      summary: Delete Data User Wish
+      tags:
+        - User Wish
+    get:
+      operationId: get-user-wishes-by-id
+      parameters:
+        - description: id user-wishes
+          in: path
+          name: id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/model.ResponseOK"
+      summary: Get Data User Wish By Id
+      tags:
+        - User Wish
+    put:
+      consumes:
+        - application/json
+      operationId: update-user-wishes
+      parameters:
+        - description: id wish
+          in: path
+          name: id
+          required: true
+          type: string
+        - description: Request Body
+          in: body
+          name: Input
+          required: true
+          schema:
+            $ref: "#/definitions/model.User WishRequest"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/model.ResponseOK"
+      summary: Update Data User Wish
+      tags:
+        - User Wish
+  /user-wishes/{id}/status:
+    put:
+      consumes:
+        - application/json
+      operationId: update-user-wishes-status
+      parameters:
+        - description: id wish
+          in: path
+          name: id
+          required: true
+          type: string
+        - description: Request Body
+          in: body
+          name: Input
+          required: true
+          schema:
+            properties:
+              is_done:
+                type: boolean
+            required:
+              - is_done
+            type: object
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/model.ResponseOK"
+      summary: Update Status Data User Wish
+      tags:
+        - User Wish
+schemes:
+  - http
+security:
+  - access_token: []
+securityDefinitions:
+  access_token:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

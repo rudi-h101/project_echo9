@@ -84,7 +84,7 @@ func CreateWish(c echo.Context) error {
 		})
 	}
 
-	return c.JSON(http.StatusOK, dto.BaseResponse {
+	return c.JSON(http.StatusCreated, dto.BaseResponse {
 		Status: true,
 		Message: "Successfully create wish.",
 		Data: echo.Map{
