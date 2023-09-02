@@ -15,7 +15,7 @@ func ListWish(c echo.Context) error {
 
 	if(err != nil){
 		return c.JSON(http.StatusUnauthorized, echo.Map{
-			"message": "Unauthorized!",
+			"message": err,
 		})
 	}
 	offset := c.QueryParam("offset")
@@ -54,7 +54,7 @@ func CreateWish(c echo.Context) error {
 
 	if(err != nil){
 		return c.JSON(http.StatusUnauthorized, echo.Map{
-			"message": "Unauthorized!",
+			"message": err.Error(),
 		})
 	}
 

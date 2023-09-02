@@ -3,9 +3,7 @@ package routes
 import (
 	"os"
 	"prakerja9/controllers"
-	"prakerja9/models/dto"
 
-	"github.com/golang-jwt/jwt/v5"
 	echojwt "github.com/labstack/echo-jwt/v4"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -22,13 +20,7 @@ func InitRoute(e *echo.Echo) {
 	// Restricted group
 	r := e.Group("")
 	// Configure middleware with the custom claims type
-	config := echojwt.Config{
-		NewClaimsFunc: func(c echo.Context) jwt.Claims {
-			return new(dto.JwtCustomClaims)
-		},
-		SigningKey: []byte(os.Getenv("JWT_SECRET")),
-	}
-	r.Use(echojwt.WithConfig(config))
+	r.Use(echojwt.JWT([]byte(os.Getenv("JWT_SECRET"))))
 
 	r.GET("/user-wishes", controllers.ListWish)
 	r.POST("/user-wishes", controllers.CreateWish)

@@ -1,8 +1,6 @@
 package controllers
 
 import (
-	"crypto/sha256"
-	"encoding/hex"
 	"net/http"
 
 	"prakerja9/models"
@@ -10,6 +8,7 @@ import (
 	"prakerja9/utils"
 
 	"github.com/labstack/echo/v4"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func Register(c echo.Context) error {
@@ -29,22 +28,7 @@ func Register(c echo.Context) error {
 		})
 	}
 
-	hasher := sha256.New()
-
-	// Menambahkan data string ke hasher
-	_, err := hasher.Write([]byte(body.Password))
-	if err != nil {
-		return c.JSON(http.StatusInternalServerError, echo.Map{
-			"message": "Failed to hash password",
-		})
-	}
-
-	// Mendapatkan hasil hash sebagai byte
-	hashBytes := hasher.Sum(nil)
-
-	// Mengonversi hasil hash menjadi string hexadecimal
-	hashedPassword := hex.EncodeToString(hashBytes)
-
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(body.Password), bcrypt.DefaultCost)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, echo.Map{
 			"message": "Failed to hash password",
@@ -99,24 +83,9 @@ func Login(c echo.Context) error {
 		})
 	}
 
-	// err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(body.Password))
-	hasher := sha256.New()
+	err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(body.Password))
 
-	// Menambahkan data string ke hasher
-	_, err := hasher.Write([]byte(body.Password))
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, echo.Map{
-			"message": "Failed to hash password",
-		})
-	}
-
-	// Mendapatkan hasil hash sebagai byte
-	hashBytes := hasher.Sum(nil)
-
-	// Mengonversi hasil hash menjadi string hexadecimal
-	hashedPassword := hex.EncodeToString(hashBytes)
-
-	if hashedPassword != user.Password {
 		return c.JSON(http.StatusUnauthorized, echo.Map{
 			"message": "Invalid credentials",
 		})

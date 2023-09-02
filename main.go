@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	// config.LoadEnv()
+	config.LoadEnv()
 
 	utils.InitDatabase()
 	

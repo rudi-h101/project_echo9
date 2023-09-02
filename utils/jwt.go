@@ -1,19 +1,37 @@
 package utils
 
 import (
+	"errors"
 	"os"
 	"prakerja9/models"
 	"prakerja9/models/dto"
 	"time"
 
-	"github.com/golang-jwt/jwt/v5"
+	"github.com/golang-jwt/jwt/v4"
 	"github.com/labstack/echo/v4"
 )
 
 func GetUserID(c echo.Context) (int, error) {
-	user := c.Get("user").(*jwt.Token)
-	claims := user.Claims.(*dto.JwtCustomClaims)
-	return claims.Id, nil
+	authHeader := c.Request().Header.Get("Authorization")
+
+	tokenString := authHeader[7:]
+	token, _ := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		return []byte(os.Getenv("JWT_SECRET")), nil
+	})
+
+	// Access the claims from the token
+	claims, ok := token.Claims.(jwt.MapClaims)
+	if !ok {
+		return 0, errors.New("Error accessing claims")
+	}
+
+	id := int(claims["id"].(float64))
+
+	return id, nil
+}
+
+func Error(s string) {
+	panic("unimplemented")
 }
 
 func GenerateJwt(user models.User) (string, error) {
